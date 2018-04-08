@@ -1,14 +1,27 @@
 package events;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
 
 public class Controller {
 
     @FXML
     private TextField nameField;
+    @FXML
+    private Button greetingButton;
+    @FXML
+    private Button byeButton;
 
-    public void onButtonClicked(){
-        System.out.println("Hello " + nameField.getText() + "! How are you?");
+    @FXML
+    public void onButtonClicked(ActionEvent e){
+        if(e.getSource().equals(greetingButton)){
+            System.out.println("Hello " + nameField.getText() + "! How are you?");
+            System.out.println("The following button was pressed " + e.getSource());
+        }else if(e.getSource().equals(byeButton)){
+            System.out.println("Bye " + nameField.getText() + "! See you next time!");
+            System.out.println("The following button was pressed " + e.getSource());
+        }
     }
 }

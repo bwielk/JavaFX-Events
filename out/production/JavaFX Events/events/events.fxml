@@ -12,6 +12,11 @@
         <TextField fx:id="nameField" GridPane.rowIndex="2"/>
         <Button text="Run Greeting"
                 GridPane.rowIndex="3"
-                onAction="#onButtonClicked"/>
+                onAction="#onButtonClicked"
+                fx:id="greetingButton"/>
+        <Button text="Say Bye"
+                GridPane.rowIndex="4"
+                onAction="#onButtonClicked"
+                fx:id="byeButton"/>
     </VBox>
 </GridPane>
