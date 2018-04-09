@@ -2,8 +2,12 @@ package events;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+
+import javax.xml.soap.Text;
+import java.time.LocalDate;
 
 public class Controller {
 
@@ -13,6 +17,17 @@ public class Controller {
     private Button greetingButton;
     @FXML
     private Button byeButton;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField secondNameField;
+    @FXML
+    private TextField addressField;
+    @FXML
+    private TextField townField;
+    @FXML
+    private DatePicker dobField;
+
 
     @FXML
     public void initialize(){
@@ -36,5 +51,25 @@ public class Controller {
         boolean disabledButton = text.isEmpty() || text.trim().isEmpty();
         greetingButton.setDisable(disabledButton);
         byeButton.setDisable(disabledButton);
+    }
+
+    @FXML
+    public void handleSubmitForm(){
+        String firstName = firstNameField.getText();
+        String secondName = secondNameField.getText();
+        String address = addressField.getText();
+        String town = townField.getText();
+        String dob = dobField.getValue().toString();
+        System.out.println("Here are your details "
+                            + "\nNAME: " + firstName
+                            + "\nSURNAME: " + secondName
+                            + "\nADDRESS: " + address
+                            + "\nTOWN: " + town
+                            + "\nDATE OF BIRTH: " + dob);
+        firstNameField.clear();
+        secondNameField.clear();
+        addressField.clear();
+        townField.clear();
+        dobField.setValue(LocalDate.now());
     }
 }
