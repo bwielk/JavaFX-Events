@@ -3,10 +3,11 @@ package events;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.VBox;
 
-import javax.xml.soap.Text;
 import java.time.LocalDate;
 
 public class Controller {
@@ -27,6 +28,8 @@ public class Controller {
     private TextField townField;
     @FXML
     private DatePicker dobField;
+    @FXML
+    private VBox vBoxId;
 
 
     @FXML
@@ -66,6 +69,8 @@ public class Controller {
                             + "\nADDRESS: " + address
                             + "\nTOWN: " + town
                             + "\nDATE OF BIRTH: " + dob);
+        Label feedback = new Label("Your data have been submitted");
+        vBoxId.getChildren().add(feedback);
         firstNameField.clear();
         secondNameField.clear();
         addressField.clear();
