@@ -30,6 +30,8 @@ public class Controller {
     private DatePicker dobField;
     @FXML
     private VBox vBoxId;
+    @FXML
+    private Label feedback;
 
 
     @FXML
@@ -58,23 +60,30 @@ public class Controller {
 
     @FXML
     public void handleSubmitForm(){
+        if(feedback != null){
+            vBoxId.getChildren().remove(feedback);
+        }
         String firstName = firstNameField.getText();
         String secondName = secondNameField.getText();
         String address = addressField.getText();
         String town = townField.getText();
-        String dob = dobField.getValue().toString();
-        System.out.println("Here are your details "
-                            + "\nNAME: " + firstName
-                            + "\nSURNAME: " + secondName
-                            + "\nADDRESS: " + address
-                            + "\nTOWN: " + town
-                            + "\nDATE OF BIRTH: " + dob);
-        Label feedback = new Label("Your data have been submitted");
+        LocalDate dob = dobField.getValue();
+        if(firstName.isEmpty() || secondName.isEmpty() || address.isEmpty() || town.isEmpty()){
+            feedback = new Label("Please check if you have filled out all the fields");
+        }else{
+            feedback = new Label("Your details have been submitted");
+            System.out.println("Here are your details "
+                    + "\nNAME: " + firstName
+                    + "\nSURNAME: " + secondName
+                    + "\nADDRESS: " + address
+                    + "\nTOWN: " + town
+                    + "\nDATE OF BIRTH: " + dob.toString());
+            firstNameField.clear();
+            secondNameField.clear();
+            addressField.clear();
+            townField.clear();
+            dobField.setValue(LocalDate.now());
+        }
         vBoxId.getChildren().add(feedback);
-        firstNameField.clear();
-        secondNameField.clear();
-        addressField.clear();
-        townField.clear();
-        dobField.setValue(LocalDate.now());
     }
 }
