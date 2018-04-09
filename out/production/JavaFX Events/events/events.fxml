@@ -6,15 +6,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
 <GridPane fx:controller="events.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <VBox GridPane.columnIndex="0" fx:id="vBoxId">
         <Label GridPane.rowIndex="1" text="Enter your name"/>
         <TextField fx:id="nameField" GridPane.rowIndex="2" onKeyReleased="#handleKeyReleased"/>
-        <GridPane>
+        <HBox>
             <Button text="Run Greeting"
                     GridPane.rowIndex="0"
-                    GridPane.columnIndex="0"
                     onAction="#onButtonClicked"
                     fx:id="greetingButton"/>
             <Button text="Say Bye"
@@ -22,7 +23,11 @@
                     GridPane.columnIndex="1"
                     onAction="#onButtonClicked"
                     fx:id="byeButton"/>
-        </GridPane>
+        </HBox>
+        <CheckBox text="Clear the field after saying hello or bye"
+                  GridPane.rowIndex="1"
+                  fx:id="clearTextCheckBox"
+                  onAction="#handleChange"/>
         <Label text="First Name" GridPane.rowIndex="2"/>
         <TextField fx:id="firstNameField" GridPane.rowIndex="2"/>
         <Label text="Second Name" GridPane.rowIndex="3"/>

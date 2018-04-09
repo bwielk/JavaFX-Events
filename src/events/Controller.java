@@ -1,10 +1,7 @@
 package events;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
 
@@ -32,6 +29,8 @@ public class Controller {
     private VBox vBoxId;
     @FXML
     private Label feedback;
+    @FXML
+    private CheckBox clearTextCheckBox;
 
 
     @FXML
@@ -47,6 +46,14 @@ public class Controller {
         }else if(e.getSource().equals(byeButton)){
             System.out.println("Bye " + nameField.getText() + "! See you next time!");
             System.out.println("The following button was pressed " + e.getSource());
+        }
+    }
+
+    @FXML
+    public void handleChange(){
+        System.out.println("The checkbox is " + (clearTextCheckBox.isSelected() ? "CHECKED" : "UNCHECKED"));
+        if(clearTextCheckBox.isSelected()){
+            nameField.clear();
         }
     }
 
