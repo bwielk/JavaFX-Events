@@ -68,16 +68,19 @@ public class Controller {
         String address = addressField.getText();
         String town = townField.getText();
         LocalDate dob = dobField.getValue();
-        if(firstName.isEmpty() || secondName.isEmpty() || address.isEmpty() || town.isEmpty()){
+        if(     (firstName.isEmpty() || firstName.trim().isEmpty()) ||
+                (secondName.isEmpty() || secondName.trim().isEmpty()) ||
+                (address.isEmpty() || address.trim().isEmpty()) ||
+                (town.isEmpty() || town.trim().isEmpty())){
             feedback = new Label("Please check if you have filled out all the fields");
         }else{
             feedback = new Label("Your details have been submitted");
             System.out.println("Here are your details "
-                    + "\nNAME: " + firstName
-                    + "\nSURNAME: " + secondName
-                    + "\nADDRESS: " + address
-                    + "\nTOWN: " + town
-                    + "\nDATE OF BIRTH: " + dob.toString());
+                    + "\nNAME: " + firstName.trim()
+                    + "\nSURNAME: " + secondName.trim()
+                    + "\nADDRESS: " + address.trim()
+                    + "\nTOWN: " + town.trim()
+                    + "\nDATE OF BIRTH: " + dob.toString().trim());
             firstNameField.clear();
             secondNameField.clear();
             addressField.clear();
