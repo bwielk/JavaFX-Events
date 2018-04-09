@@ -36,6 +36,5 @@ public class Controller {
         boolean disabledButton = text.isEmpty() || text.trim().isEmpty();
         greetingButton.setDisable(disabledButton);
         byeButton.setDisable(disabledButton);
-
     }
 }

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.DatePicker?>
 <GridPane fx:controller="events.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <VBox GridPane.columnIndex="0">
@@ -22,6 +23,16 @@
                     onAction="#onButtonClicked"
                     fx:id="byeButton"/>
         </GridPane>
-
+        <Label text="First Name" GridPane.rowIndex="2"/>
+        <TextField fx:id="firstNameField" GridPane.rowIndex="2"/>
+        <Label text="Second Name" GridPane.rowIndex="3"/>
+        <TextField fx:id="secondNameField" GridPane.rowIndex="3"/>
+        <Label text="Address(Street name, house number)" GridPane.rowIndex="4"/>
+        <TextField fx:id="addressField" GridPane.rowIndex="4"/>
+        <Label text="Town" GridPane.rowIndex="5"/>
+        <TextField fx:id="townField" GridPane.rowIndex="5"/>
+        <Label text="Your Date of Birth" GridPane.rowIndex="6"/>
+        <DatePicker fx:id="dobField" GridPane.rowIndex="6"/>
+        <Button text="Submit" GridPane.rowIndex="7"/>
     </VBox>
 </GridPane>
