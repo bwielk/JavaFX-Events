@@ -1,11 +1,12 @@
 package events;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -28,7 +29,7 @@ public class Controller {
     @FXML
     private VBox vBoxId;
     @FXML
-    private Label feedback;
+    private ArrayList<Label> feedback = new ArrayList<>();
     @FXML
     private CheckBox clearTextCheckBox;
 
@@ -54,6 +55,14 @@ public class Controller {
         System.out.println("The checkbox is " + (clearTextCheckBox.isSelected() ? "CHECKED" : "UNCHECKED"));
         if(clearTextCheckBox.isSelected()){
             nameField.clear();
+            greetingButton.setDisable(true);
+            byeButton.setDisable(true);
+        }
+        try{
+            Thread.sleep(5000);
+        }
+        catch(InterruptedException e){
+
         }
     }
 
@@ -66,34 +75,32 @@ public class Controller {
     }
 
     @FXML
-    public void handleSubmitForm(){
-        if(feedback != null){
-            vBoxId.getChildren().remove(feedback);
+    public void handleSubmitForm() {
+        if(!feedback.isEmpty()) {
+           for(int i=0; i<feedback.size(); i++){
+               vBoxId.getChildren().remove(feedback.get(i));
+           }
         }
-        String firstName = firstNameField.getText();
-        String secondName = secondNameField.getText();
-        String address = addressField.getText();
-        String town = townField.getText();
-        LocalDate dob = dobField.getValue();
-        if(     (firstName.isEmpty() || firstName.trim().isEmpty()) ||
-                (secondName.isEmpty() || secondName.trim().isEmpty()) ||
-                (address.isEmpty() || address.trim().isEmpty()) ||
-                (town.isEmpty() || town.trim().isEmpty())){
-            feedback = new Label("Please check if you have filled out all the fields");
-        }else{
-            feedback = new Label("Your details have been submitted");
-            System.out.println("Here are your details "
-                    + "\nNAME: " + firstName.trim()
-                    + "\nSURNAME: " + secondName.trim()
-                    + "\nADDRESS: " + address.trim()
-                    + "\nTOWN: " + town.trim()
-                    + "\nDATE OF BIRTH: " + dob.toString().trim());
-            firstNameField.clear();
-            secondNameField.clear();
-            addressField.clear();
-            townField.clear();
-            dobField.setValue(LocalDate.now());
+        TextField[] formElements = {firstNameField, secondNameField, addressField, townField};
+        for(TextField field : formElements){
+            if (field.getText().isEmpty() || field.getText().trim().isEmpty()) {
+                feedback.add(new Label("Please check if you have filled the " + field.getId() + " field"));
+            } else {
+                feedback.add(new Label("Your details have been submitted"));
+                System.out.println("Here are your details "
+                        + "\nNAME: " + firstNameField.getText().trim()
+                        + "\nSURNAME: " + secondNameField.getText().trim()
+                        + "\nADDRESS: " + addressField.getText().trim()
+                        + "\nTOWN: " + townField.getText().trim()
+                        + "\nDATE OF BIRTH: " + dobField.getValue().toString());
+                for(TextField inputField : formElements){
+                    inputField.clear();
+                }
+                dobField.setValue(LocalDate.now());
+            }
         }
-        vBoxId.getChildren().add(feedback);
+        if(!feedback.isEmpty()){
+            vBoxId.getChildren().addAll(feedback);
+        }
     }
 }
