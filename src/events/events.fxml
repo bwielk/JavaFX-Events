@@ -39,5 +39,6 @@
         <Label text="Your Date of Birth" GridPane.rowIndex="6"/>
         <DatePicker fx:id="dobField" GridPane.rowIndex="6"/>
         <Button text="Submit" GridPane.rowIndex="7" onAction="#handleSubmitForm"/>
+        <Label fx:id="labelSign" text="Nothing has happened"/>
     </VBox>
 </GridPane>

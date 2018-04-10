@@ -1,5 +1,6 @@
 package events;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -32,6 +33,8 @@ public class Controller {
     private ArrayList<Label> feedback = new ArrayList<>();
     @FXML
     private CheckBox clearTextCheckBox;
+    @FXML
+    private Label labelSign;
 
 
     @FXML
@@ -58,12 +61,28 @@ public class Controller {
             greetingButton.setDisable(true);
             byeButton.setDisable(true);
         }
-        try{
-            Thread.sleep(5000);
-        }
-        catch(InterruptedException e){
+        Runnable task = new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    String s = Platform.isFxApplicationThread() ? "UI Thread" : "Background Thread";
+                    System.out.println(s);
+                    Thread.sleep(5000);
+                    Platform.runLater(new Runnable(){
+                        @Override
+                        public void run(){
+                            String s = Platform.isFxApplicationThread() ? "UI Thread" : "Background Thread";
+                            System.out.println(s);
+                            labelSign.setText("The runnable has worked");
+                        }
+                    });
+                }
+                catch(InterruptedException e){ }
+                System.out.println("Meanwhile action");
+            }
+        };
 
-        }
+        new Thread(task).start();
     }
 
     @FXML
@@ -76,30 +95,35 @@ public class Controller {
 
     @FXML
     public void handleSubmitForm() {
-        if(!feedback.isEmpty()) {
-           for(int i=0; i<feedback.size(); i++){
-               vBoxId.getChildren().remove(feedback.get(i));
-           }
-        }
-        TextField[] formElements = {firstNameField, secondNameField, addressField, townField};
-        for(TextField field : formElements){
-            if (field.getText().isEmpty() || field.getText().trim().isEmpty()) {
-                feedback.add(new Label("Please check if you have filled the " + field.getId() + " field"));
-            } else {
-                feedback.add(new Label("Your details have been submitted"));
-                System.out.println("Here are your details "
-                        + "\nNAME: " + firstNameField.getText().trim()
-                        + "\nSURNAME: " + secondNameField.getText().trim()
-                        + "\nADDRESS: " + addressField.getText().trim()
-                        + "\nTOWN: " + townField.getText().trim()
-                        + "\nDATE OF BIRTH: " + dobField.getValue().toString());
-                for(TextField inputField : formElements){
-                    inputField.clear();
-                }
-                dobField.setValue(LocalDate.now());
+        //clears up the existing labels
+        if (!feedback.isEmpty()) {
+            for (int i = 0; i < feedback.size(); i++) {
+                vBoxId.getChildren().remove(feedback.get(i));
             }
         }
-        if(!feedback.isEmpty()){
+        //helper array for looping through the properties of the input fields
+        TextField[] formElements = {firstNameField, secondNameField, addressField, townField};
+        int i =0;
+        for (TextField field : formElements) {
+            if (field.getText().isEmpty() || field.getText().trim().isEmpty()) {
+                feedback.add(new Label("Please check if you have filled the " + field.getId() + " field"));
+            }
+            System.out.println(feedback.size());
+            vBoxId.getChildren().addAll(feedback);
+            return;
+        }
+        feedback.add(new Label("Your details have been submitted"));
+        System.out.println("Here are your details "
+                + "\nNAME: " + firstNameField.getText().trim()
+                + "\nSURNAME: " + secondNameField.getText().trim()
+                + "\nADDRESS: " + addressField.getText().trim()
+                + "\nTOWN: " + townField.getText().trim()
+                + "\nDATE OF BIRTH: " + dobField.getValue());
+        for (TextField inputField : formElements) {
+            inputField.clear();
+        }
+        dobField.setValue(LocalDate.now());
+        if (!feedback.isEmpty()) {
             vBoxId.getChildren().addAll(feedback);
         }
     }
