@@ -1,0 +1,10 @@
+.button {
+     -fx-background-color: indigo;
+     -fx-text-fill: white;
+     -fx-font-weight: bold;
+     -fx-margin: 5 2 5 2;
+}
+
+.textInput {
+    -fx-border: 2px solid black;
+ }
